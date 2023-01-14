@@ -5,8 +5,10 @@ import fs from "fs";
 import { analyze } from "./analyzer";
 import { initialize } from "./initializer";
 import { State } from "./state";
-import { present } from "./presenter";
+import { present, presentUnusedFiles } from "./presenter";
 import { IConfigInterface } from "./configurator";
+import { analyzeFilesByUnusedExports } from "./fileAnalyzer";
+import { removeUnusedFiles } from "./remover";
 
 export const run = (config: IConfigInterface, output = console.log) => {
   const tsConfigPath = path.resolve(config.project);
@@ -20,14 +22,41 @@ export const run = (config: IConfigInterface, output = console.log) => {
 
   const state = new State();
 
-  analyze(project, state.onResult, entrypoints, config.skip);
+  if (config.remove_files) {
+    analyzeFilesByUnusedExports(project, state, entrypoints, config);
+    const presented = presentUnusedFiles(state);
+    presented.forEach(value => {
+      output(value);
+    });
+    output(`found ${presented.length} files that will not be used when compiling the project`);
+    if (presented.length > 0) {
+      output('proceed to delete these files? (y/n)');
+      process.stdin.on('data', (data) => {
+        if (data != null) {
+          if (data.toString().trim() === 'y') {
+            output('deleting...');
+            removeUnusedFiles(state);
+            process.exit(0);
+          }else if (data.toString().trim() === 'n') {
+            process.exit(0);
+          } else {
+            output("please enter 'y' or 'n'")
+          }
+        }
+      });
+    }
+    return presented.length;
+  }
+
+  analyze(project, state.onResult, entrypoints, config.skip, config.ignore);
 
   const presented = present(state);
-
-  const filterIgnored = config.ignore !== undefined ? presented.filter(file => !file.match(config.ignore)) : presented;
-
-  filterIgnored.forEach(value => {
+  
+  presented.forEach(value => {
     output(value);
   });
-  return filterIgnored.length;
+
+  output(`found ${presented.length} unused exports`)
+
+  return presented.length;
 };

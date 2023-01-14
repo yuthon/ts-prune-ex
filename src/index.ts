@@ -11,6 +11,6 @@ const resultCount = run(config);
 
 if (resultCount > 0 && config.error){
     process.exit(1);
-} else {
+} else if (!config.remove_files) {
     process.exit(0);
 }

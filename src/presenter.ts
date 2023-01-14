@@ -5,7 +5,7 @@ import { ResultSymbol } from "./analyzer";
 const USED_IN_MODULE = ' (used in module)';
 
 const formatOutput = (file: string, result: ResultSymbol) => {
-  const {name, line, usedInModule} = result;
+  const { name, line, usedInModule } = result;
   return `${chalk.green(file)}:${chalk.yellow(line)} - ${chalk.cyan(name)}` + (usedInModule ? `${chalk.grey(USED_IN_MODULE)}` : '');
 }
 
@@ -17,8 +17,18 @@ export const present = (state: State): string[] => {
       symbols: result.symbols
     }))
     .map(
-      ({file, symbols}) => symbols.map(sym => formatOutput(file, sym))
+      ({ file, symbols }) => symbols.map(sym => formatOutput(file, sym))
     );
 
   return [].concat.apply([], unused2D);
-};
+}
+
+export const presentUnusedFiles = (state: State): string[] => {
+  const unused2D = state
+    .getUnusedFiles()
+    .map(file => 
+      chalk.green(file.replace(process.cwd(), "").replace(new RegExp("^/"), ""))
+    )
+
+  return [].concat.apply([], unused2D);
+}

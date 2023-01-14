@@ -17,7 +17,6 @@ import { getNodesOfKind } from './util/getNodesOfKind';
 import countBy from "lodash/fp/countBy";
 import last from "lodash/fp/last";
 import { realpathSync } from "fs";
-import { IConfigInterface } from "./configurator";
 
 type OnResultType = (result: IAnalysedResult) => void;
 
@@ -36,6 +35,7 @@ export type IAnalysedResult = {
   file: string;
   type: AnalysisResultTypeEnum;
   symbols: ResultSymbol[];
+  hasExportsReferencedInOtherFiles?: boolean;
 }
 
 function handleExportDeclaration(node: SourceFileReferencingNodes) {
@@ -156,10 +156,10 @@ const lineNumber = (symbol: Symbol) =>
 
 export const getExported = (file: SourceFile) =>
   file.getExportSymbols().filter(symbol => !mustIgnore(symbol, file))
-  .map(symbol => ({
-    name: symbol.compilerSymbol.name,
-    line: symbol.getDeclarations().every(decl => decl.getSourceFile() === file) ? lineNumber(symbol) : undefined,
-  }));
+    .map(symbol => ({
+      name: symbol.compilerSymbol.name,
+      line: symbol.getDeclarations().every(decl => decl.getSourceFile() === file) ? lineNumber(symbol) : undefined,
+    }));
 
 /* Returns all the "import './y';" imports, which must be for side effects */
 export const importsForSideEffects = (file: SourceFile): IAnalysedResult[] =>
@@ -217,23 +217,26 @@ export const getPotentiallyUnused = (file: SourceFile, skipper?: RegExp): IAnaly
     file.getReferencingNodesInOtherSourceFiles(),
     skipper
   ).reduce(
-      (previous, node: SourceFileReferencingNodes) => {
-        const kind = node.getKind().toString();
-        const value = nodeHandlers?.[kind]?.(node) ?? [];
+    (previous, node: SourceFileReferencingNodes) => {
+      const kind = node.getKind().toString();
+      const value = nodeHandlers?.[kind]?.(node) ?? [];
 
-        return previous.concat(value);
-      },
-      []
-    );
+      return previous.concat(value);
+    },
+    []
+  );
 
   const unused = referenced.includes("*") ? [] :
     exported.filter(exp => !referenced.includes(exp.name))
       .map(exp => ({ ...exp, usedInModule: referencedInFile.includes(exp.name) }))
 
+  const hasExportsReferencedInOtherFiles = exported.length > 0 && referenced.length > 0
+
   return {
     file: file.getFilePath(),
     symbols: unused,
-    type: AnalysisResultTypeEnum.POTENTIALLY_UNUSED
+    type: AnalysisResultTypeEnum.POTENTIALLY_UNUSED,
+    hasExportsReferencedInOtherFiles: hasExportsReferencedInOtherFiles,
   };
 };
 
@@ -252,19 +255,20 @@ const filterSkippedFiles = (sourceFiles: SourceFile[], skipper: RegExp | undefin
   return sourceFiles.filter(file => !skipper.test(file.getSourceFile().compilerNode.fileName));
 }
 
-export const analyze = (project: Project, onResult: OnResultType, entrypoints: string[], skipPattern?: string) => {
+export const analyze = (project: Project, onResult: OnResultType, entrypoints: string[], skipPattern?: string, ignorePath?: string) => {
   const skipper = skipPattern ? new RegExp(skipPattern) : undefined;
 
   filterSkippedFiles(project.getSourceFiles(), skipper)
-  .forEach(file => {
-    [
-      getPotentiallyUnused(file, skipper),
-      ...getDefinitelyUsed(file),
-    ].forEach(result => {
-      if (!result.file) return // Prevent passing along a "null" filepath. Fixes #105
-      onResult({ ...result, file: realpathSync(result.file) })
+    .forEach(file => {
+      [
+        getPotentiallyUnused(file, skipper),
+        ...getDefinitelyUsed(file),
+      ].forEach(result => {
+        if (!result.file) return // Prevent passing along a "null" filepath. Fixes #105
+        if (ignorePath && result.file.match(ignorePath)) return
+        onResult({ ...result, file: realpathSync(result.file) })
+      });
     });
-  });
 
   emitTsConfigEntrypoints(entrypoints, onResult);
 };
