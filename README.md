@@ -1,4 +1,4 @@
-![Build](https://img.shields.io/github/workflow/status/yuthon/ts-prune-expanded/Run%20CI%20Pipeline) ![npm](https://img.shields.io/npm/dm/ts-prune-ex) ![GitHub issues](https://img.shields.io/github/issues-raw/yuthon/ts-prune-ex)
+![npm](https://img.shields.io/npm/dm/ts-prune-ex) ![GitHub issues](https://img.shields.io/github/issues-raw/yuthon/ts-prune-ex)
 
 # ts-prune-ex
 
