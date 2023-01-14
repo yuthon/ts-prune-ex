@@ -1,14 +1,14 @@
-![Build](https://img.shields.io/github/workflow/status/yuthon/ts-prune-expanded/Run%20CI%20Pipeline) ![npm](https://img.shields.io/npm/dm/ts-prune-expanded) ![GitHub issues](https://img.shields.io/github/issues-raw/yuthon/ts-prune-expanded)
+![Build](https://img.shields.io/github/workflow/status/yuthon/ts-prune-expanded/Run%20CI%20Pipeline) ![npm](https://img.shields.io/npm/dm/ts-prune-ex) ![GitHub issues](https://img.shields.io/github/issues-raw/yuthon/ts-prune-ex)
 
-# ts-prune-expanded
+# ts-prune-ex
 
-ts-prune finds potentially unused exports in your Typescript project with zero configuration. I expanded and added an option to find and remove unused files based on those unused exports.
+ts-prune is a library that finds potentially unused exports in your Typescript project with zero configuration. I expanded and added an option to find and remove unused files based on those unused exports.
 
 [![asciicast](https://asciinema.org/a/liQKNmkGkedCnyHuJzzgu7uDI.svg)](https://asciinema.org/a/liQKNmkGkedCnyHuJzzgu7uDI) 
 
 ## Getting Started
 
-`ts-prune` exposes a cli that reads your tsconfig file and prints out all the unused exports in your source files.
+`ts-prune-ex` exposes a cli that reads your tsconfig file and prints out all the unused exports in your source files.
 
 ### Installing
 
