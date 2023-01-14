@@ -1,10 +1,9 @@
 ![npm](https://img.shields.io/npm/dm/ts-prune-ex) ![GitHub issues](https://img.shields.io/github/issues-raw/yuthon/ts-prune-ex)
 
-## This library is experimental. I recommend you to checkout to a new branch to test out before actually using it.
-
 # ts-prune-ex
 
 [ts-prune](https://github.com/nadeesha/ts-prune) is a library that finds potentially unused exports in your Typescript project with zero configuration. I expanded and added an '-rf' configuration option to find and remove unused files based on those unused exports.
+※The option is experimental. I recommend you to checkout to a new branch to test out before actually using it.
 
 ## Getting Started
 
