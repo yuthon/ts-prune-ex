@@ -1,6 +1,6 @@
 ![npm](https://img.shields.io/npm/dm/ts-prune-ex) ![GitHub issues](https://img.shields.io/github/issues-raw/yuthon/ts-prune-ex)
 
-## This library is experimental
+## This library is experimental. I recommend you to checkout to a new branch to test out before actually using it.
 
 # ts-prune-ex
 
