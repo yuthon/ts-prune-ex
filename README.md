@@ -2,9 +2,7 @@
 
 # ts-prune-ex
 
-ts-prune is a library that finds potentially unused exports in your Typescript project with zero configuration. I expanded and added an option to find and remove unused files based on those unused exports.
-
-[![asciicast](https://asciinema.org/a/liQKNmkGkedCnyHuJzzgu7uDI.svg)](https://asciinema.org/a/liQKNmkGkedCnyHuJzzgu7uDI) 
+[ts-prune](https://github.com/nadeesha/ts-prune) is a library that finds potentially unused exports in your Typescript project with zero configuration. I expanded and added an option to find and remove unused files based on those unused exports.
 
 ## Getting Started
 
@@ -38,11 +36,6 @@ If you want to run against different Typescript configuration than tsconfig.json
 ```sh
 ts-prune-ex -p tsconfig.dev.json
 ```
-
-### Examples
-
-- [gatsby-material-starter](https://github.com/Vagr9K/gatsby-material-starter/blob/bdeba4160319c1977c83ee90e035c7fe1bd1854c/themes/material/package.json#L147)
-- [DestinyItemManager](https://github.com/DestinyItemManager/DIM/blob/aeb43dd848b5137656e6f47812189a2beb970089/package.json#L26)
 
 ### Configuration
 
