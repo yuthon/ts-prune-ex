@@ -2,23 +2,23 @@
 
 # ts-prune
 
-Find potentially unused exports in your Typescript project with zero configuration.
+It finds potentially unused exports in your Typescript project with zero configuration. We added a function to find and remove unused files based on those unused exports
 
 [![asciicast](https://asciinema.org/a/liQKNmkGkedCnyHuJzzgu7uDI.svg)](https://asciinema.org/a/liQKNmkGkedCnyHuJzzgu7uDI) [![Join the chat at https://gitter.im/ts-prune/community](https://badges.gitter.im/ts-prune/community.svg)](https://gitter.im/ts-prune/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Getting Started
 
-`ts-prune` exposes a cli that reads your tsconfig file and prints out all the unused exports in your source files.
+`ts-prune-expanded` exposes a cli that reads your tsconfig file and prints out all the unused exports in your source files.
 
 ### Installing
 
-Install ts-prune with yarn or npm
+Install ts-prune-expanded with yarn or npm
 
 ```sh
 # npm
-npm install ts-prune --save-dev
+npm install ts-prune-expanded --save-dev
 # yarn
-yarn add -D ts-prune
+yarn add -D ts-prune-expanded
 ```
 
 ### Usage
