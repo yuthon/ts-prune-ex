@@ -2,7 +2,7 @@
 
 # ts-prune-ex
 
-[ts-prune](https://github.com/nadeesha/ts-prune) is a library that finds potentially unused exports in your Typescript project with zero configuration. I expanded and added an option to find and remove unused files based on those unused exports.
+[ts-prune](https://github.com/nadeesha/ts-prune) is a library that finds potentially unused exports in your Typescript project with zero configuration. I expanded and added an '-rf' configuration option to find and remove unused files based on those unused exports.
 
 ## Getting Started
 
