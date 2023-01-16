@@ -1,6 +1,6 @@
 {
   "name": "ts-prune-ex",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Find potentially unused exports or files in your Typescript project with zero configuration.",
   "keywords": [
     "find",
@@ -10,7 +10,7 @@
     "files"
   ],
   "main": "lib/index.js",
-  "author": "Nadeesha Cabral <n@nadeesha.me>",
+  "author": "Yuthon",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
@@ -49,7 +49,7 @@
     "/lib"
   ],
   "bin": "./lib/index.js",
-  "repository": "git@github.com:nadeesha/ts-prune.git",
+  "repository": "git@github.com:yuthon/ts-prune-ex.git",
   "release": {
     "branches": [
       "master"
