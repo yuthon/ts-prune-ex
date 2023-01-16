@@ -39,6 +39,18 @@ If you want to run against different Typescript configuration than tsconfig.json
 ts-prune-ex -p tsconfig.dev.json
 ```
 
+### When using in a NextJS project
+
+NextJS has files with default exports under src/pages, and these exports will be detected as unused by ts-prune since they are not imported anywhere. Because of this, ts-prune-ex will detect files under src/pages as unused.
+
+To solve this issue, you need to use `-i 'src/ignore-this-path'` option like below.
+
+```sh
+ts-prune-ex -i 'src/pages'
+```
+
+this will cause ts-prune to ignore all files under 'src/pages'.
+
 ### Configuration
 
 ts-prune-ex supports CLI and file configuration via [cosmiconfig](https://github.com/davidtheclark/cosmiconfig#usage) (all file formats are supported).

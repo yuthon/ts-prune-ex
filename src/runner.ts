@@ -28,8 +28,9 @@ export const run = (config: IConfigInterface, output = console.log) => {
     presented.forEach(value => {
       output(value);
     });
-    output(`found ${presented.length} files that will not be used when compiling the project`);
+    output(`found ${presented.length} unused files`);
     if (presented.length > 0) {
+      output('It is recommended to double check if these files are actually used or not before proceeding!');
       output('proceed to delete these files? (y/n)');
       process.stdin.on('data', (data) => {
         if (data != null) {
