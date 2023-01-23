@@ -133,3 +133,9 @@ export const thisNeedsIgnoring = foo;
 ```sh
 ts-prune-ex | grep -v ignoreThisThroughoutMyCodebase
 ```
+
+### LICENSE
+
+Copyright (c) 2023 [Nadeesha Cabral](https://github.com/nadeesha)
+Released under the MIT license
+https://opensource.org/licenses/mit-license.php
